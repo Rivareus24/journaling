@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Caveat:wght@400..700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Paper */
+  --paper:       #f7f1e4;
+  --paper-warm:  #efe6d2;
+  --paper-deep:  #e5d9be;
+  --page:        #fbf6eb;
+  --page-edge:   #d9ccad;
+
+  /* Ink */
+  --ink:         #2b2620;
+  --ink-soft:    #5c544a;
+  --ink-faded:   #8b8275;
+  --ink-light:   #b5ac9e;
+
+  /* Accent */
+  --accent:      #b2563a;
+  --accent-soft: #d99479;
+  --accent-wash: rgba(178, 86, 58, 0.08);
+
+  /* Rules */
+  --rule:        #d6c9a8;
+  --rule-strong: #c4b38a;
+
+  /* Mood */
+  --mood-great:  #6b8e4e;
+  --mood-good:   #b6a862;
+  --mood-low:    #8c96a8;
+  --mood-bad:    #6b7180;
+
+  /* Fonts */
+  --font-title: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-body:  "Newsreader", "Source Serif Pro", Georgia, serif;
+  --font-hand:  "Caveat", "Kalam", cursive;
+  --font-ui:    "Inter", -apple-system, system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-page:   0 2px 4px rgba(60,45,20,0.06), 0 10px 40px rgba(60,45,20,0.10), 0 30px 80px rgba(60,45,20,0.06);
+  --shadow-drawer: -10px 0 30px rgba(60,45,20,0.08);
+  --shadow-sheet:  0 -8px 24px rgba(60,45,20,0.08);
+
+  /* Radii */
+  --radius-sm:    3px;
+  --radius-md:    4px;
+  --radius-page:  2px 2px 4px 4px;
+  --radius-sheet: 14px 14px 0 0;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+/* Paper texture background */
+.paper-bg {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(178,86,58,0.035) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(90,70,40,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,250,235,0.3) 0%, transparent 70%);
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Diary editor */
+.diary-editor {
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
+  caret-color: var(--accent);
+}
+
+.diary-editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--ink-faded);
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* Drop cap via first-letter */
+.diary-editor::first-letter,
+.diary-editor > p:first-child::first-letter {
+  font-family: var(--font-title);
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--accent);
+  float: left;
+  line-height: 0.85;
+  margin-right: 10px;
+  margin-top: 4px;
+}
+
+/* Mobile diary editor */
+.diary-editor-mobile {
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  caret-color: var(--accent);
+}
+
+.diary-editor-mobile:empty::before {
+  content: attr(data-placeholder);
+  color: var(--ink-faded);
+  font-style: italic;
+  pointer-events: none;
+}
+
+.diary-editor-mobile::first-letter {
+  font-family: var(--font-title);
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--accent);
+  float: left;
+  line-height: 0.85;
+  margin-right: 8px;
+  margin-top: 4px;
+}
