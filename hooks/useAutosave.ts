@@ -15,8 +15,8 @@ export function useAutosave(
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const failedDateRef = useRef<string | null>(null)
-  const argsRef = useRef({ date, body, mood })
-  argsRef.current = { date, body, mood }
+  const argsRef = useRef({ date, body, mood, isDirty })
+  argsRef.current = { date, body, mood, isDirty }
 
   const doSave = useCallback(async () => {
     if (retryRef.current) clearTimeout(retryRef.current)
@@ -53,5 +53,11 @@ export function useAutosave(
     }
   }, [])
 
-  return { lastSavedAt, isSaving, saveError }
+  const flush = useCallback(() => {
+    if (!argsRef.current.isDirty) return
+    if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null }
+    doSave()
+  }, [doSave])
+
+  return { lastSavedAt, isSaving, saveError, flush }
 }

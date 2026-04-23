@@ -33,7 +33,7 @@ export default function Home() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [prompt] = useState(getRandomPrompt)
 
-  const { lastSavedAt, saveError } = useAutosave(currentDate, draftBody, draftMood, isDirty)
+  const { lastSavedAt, saveError, flush } = useAutosave(currentDate, draftBody, draftMood, isDirty)
 
   // Load entry when date changes
   useEffect(() => {
@@ -61,18 +61,20 @@ export default function Home() {
   }, [searchOpen])
 
   const goToPrevDay = useCallback(() => {
+    flush()
     const d = new Date(currentDate + 'T12:00:00')
     d.setDate(d.getDate() - 1)
     setCurrentDate(toISODate(d))
-  }, [currentDate])
+  }, [currentDate, flush])
 
   const goToNextDay = useCallback(() => {
+    flush()
     const d = new Date(currentDate + 'T12:00:00')
     d.setDate(d.getDate() + 1)
     if (toISODate(d) <= today) setCurrentDate(toISODate(d))
-  }, [currentDate, today])
+  }, [currentDate, today, flush])
 
-  const goToToday = useCallback(() => setCurrentDate(today), [today])
+  const goToToday = useCallback(() => { flush(); setCurrentDate(today) }, [today, flush])
 
   useKeyboardNav({
     onPrevDay: goToPrevDay,
@@ -132,14 +134,14 @@ export default function Home() {
           state={sheetState}
           onStateChange={setSheetState}
           entries={recentEntries}
-          onSelectEntry={(date) => { setCurrentDate(date); setSheetState('peek') }}
+          onSelectEntry={(date) => { flush(); setCurrentDate(date); setSheetState('peek') }}
         />
 
         <AnimatePresence>
           {searchOpen && (
             <SearchOverlay
               entries={allEntries}
-              onSelect={(date) => { setCurrentDate(date); setSearchOpen(false) }}
+              onSelect={(date) => { flush(); setCurrentDate(date); setSearchOpen(false) }}
               onClose={() => setSearchOpen(false)}
             />
           )}
@@ -190,7 +192,7 @@ export default function Home() {
         open={archiveOpen}
         entries={recentEntries}
         currentDate={currentDate}
-        onSelectEntry={(date) => { setCurrentDate(date); setArchiveOpen(false) }}
+        onSelectEntry={(date) => { flush(); setCurrentDate(date); setArchiveOpen(false) }}
         onClose={() => setArchiveOpen(false)}
       />
 
