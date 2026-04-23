@@ -15,8 +15,8 @@ export function useKeyboardNav({
       const target = e.target as HTMLElement
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || (target as HTMLElement).isContentEditable) return
 
-      if (e.key === 'ArrowUp') { e.preventDefault(); onPrevDay() }
-      if (e.key === 'ArrowDown') { e.preventDefault(); onNextDay() }
+      if (e.key === 'ArrowUp') { e.preventDefault(); onNextDay() }
+      if (e.key === 'ArrowDown') { e.preventDefault(); onPrevDay() }
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); onSearch() }
       if ((e.metaKey || e.ctrlKey) && e.key === 'b') { e.preventDefault(); onArchive() }
     }
