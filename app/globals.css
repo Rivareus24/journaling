@@ -115,6 +115,8 @@ html, body {
   line-height: 1.6;
   color: var(--ink);
   caret-color: var(--accent);
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .diary-editor-mobile:empty::before {
@@ -122,15 +124,4 @@ html, body {
   color: var(--ink-faded);
   font-style: italic;
   pointer-events: none;
-}
-
-.diary-editor-mobile::first-letter {
-  font-family: var(--font-title);
-  font-size: 44px;
-  font-weight: 400;
-  color: var(--accent);
-  float: left;
-  line-height: 0.85;
-  margin-right: 8px;
-  margin-top: 4px;
 }
