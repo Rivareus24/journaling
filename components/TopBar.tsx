@@ -25,7 +25,7 @@ export default function TopBar({
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
           <span style={{ fontFamily: 'var(--font-title)', fontSize: 22, fontWeight: 500, letterSpacing: -0.3 }}>
-            My Diary
+            journaling
           </span>
           <span style={{ fontFamily: 'var(--font-hand)', fontSize: 18, color: 'var(--accent)' }}>·</span>
           <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 14, color: 'var(--ink-faded)' }}>

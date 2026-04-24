@@ -1,4 +1,4 @@
-# My Diary
+# journaling
 
 App di journaling personale — una pagina al giorno.
 
