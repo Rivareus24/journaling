@@ -141,6 +141,18 @@ export default function DiaryPage({
           padding: isMobile ? '0 30px 30px' : '0 88px',
           overflow: 'auto', position: 'relative',
         }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            const el = editorRef.current
+            if (!el) return
+            el.focus()
+            const range = document.createRange()
+            range.selectNodeContents(el)
+            range.collapse(false)
+            window.getSelection()?.removeAllRanges()
+            window.getSelection()?.addRange(range)
+          }
+        }}
       >
         {isFuture ? (
           <p style={{
