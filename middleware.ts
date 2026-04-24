@@ -4,9 +4,7 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Single-segment paths are token-setting routes — skip protection
-  const segment = pathname.slice(1)
-  if (segment && !segment.includes('/')) {
+  if (pathname === '/login') {
     return NextResponse.next()
   }
 
@@ -14,7 +12,7 @@ export function middleware(request: NextRequest) {
   const secret = process.env.DIARY_TOKEN
 
   if (!secret || cookieToken !== secret) {
-    return NextResponse.redirect(new URL('/403', request.url))
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 
   return NextResponse.next()
