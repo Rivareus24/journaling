@@ -97,11 +97,12 @@ export default function Home() {
       >
         <PaperNoise opacity={0.3} />
 
-        {/* Page card */}
+        {/* Page card — expands to fill screen when writing */}
         <div style={{
           position: 'absolute', top: 16, left: 16, right: 16,
-          bottom: 96,
+          bottom: sheetState === 'hidden' ? 0 : 96,
           display: 'flex', flexDirection: 'column',
+          transition: 'bottom 0.28s cubic-bezier(0.4, 0, 0.2, 1)',
         }}>
           <DiaryPage
             currentDate={currentDate}
@@ -117,20 +118,22 @@ export default function Home() {
           />
         </div>
 
-        {/* Mood bar above sheet */}
-        <div style={{
-          position: 'absolute', left: 16, right: 16, bottom: 56,
-          background: 'var(--paper-warm)',
-          borderTop: '1px solid var(--rule)',
-          padding: '10px 16px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          borderRadius: '0 0 3px 3px',
-        }}>
-          <div style={{ fontFamily: 'var(--font-title)', fontSize: 13, fontStyle: 'italic', color: 'var(--ink-faded)', fontWeight: 300 }}>
-            com&apos;è andata?
+        {/* Mood bar — hidden while writing */}
+        {sheetState !== 'hidden' && (
+          <div style={{
+            position: 'absolute', left: 16, right: 16, bottom: 56,
+            background: 'var(--paper-warm)',
+            borderTop: '1px solid var(--rule)',
+            padding: '10px 16px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            borderRadius: '0 0 3px 3px',
+          }}>
+            <div style={{ fontFamily: 'var(--font-title)', fontSize: 13, fontStyle: 'italic', color: 'var(--ink-faded)', fontWeight: 300 }}>
+              com&apos;è andata?
+            </div>
+            <MoodPicker current={draftMood} onChange={handleMoodChange} variant="bar" />
           </div>
-          <MoodPicker current={draftMood} onChange={handleMoodChange} variant="bar" />
-        </div>
+        )}
 
         <BottomSheet
           state={sheetState}
