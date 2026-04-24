@@ -140,19 +140,7 @@ export default function DiaryPage({
           flex: 1,
           padding: isMobile ? '0 30px 30px' : '0 88px',
           overflow: 'auto', position: 'relative',
-          cursor: isMobile ? undefined : 'text',
-        }}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            const el = editorRef.current
-            if (!el) return
-            el.focus()
-            const range = document.createRange()
-            range.selectNodeContents(el)
-            range.collapse(false)
-            window.getSelection()?.removeAllRanges()
-            window.getSelection()?.addRange(range)
-          }
+          display: 'flex', flexDirection: 'column',
         }}
       >
         {isFuture ? (
@@ -180,7 +168,7 @@ export default function DiaryPage({
             }}
             className={isMobile ? 'diary-editor-mobile' : 'diary-editor'}
             data-placeholder={prompt}
-            style={{ minHeight: 200, outline: 'none' }}
+            style={{ flex: 1, minHeight: 200, outline: 'none', cursor: isMobile ? undefined : 'text' }}
           />
         )}
       </div>
