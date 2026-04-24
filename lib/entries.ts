@@ -44,6 +44,7 @@ export function searchEntries(entries: Entry[], query: string): Entry[] {
   const fuse = new Fuse(entries, {
     keys: ['body'],
     threshold: 0.4,
+    ignoreLocation: true,
     includeScore: false,
   })
   return fuse.search(query).map((r) => r.item)
