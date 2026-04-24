@@ -60,6 +60,22 @@ export default function Home() {
     }
   }, [searchOpen])
 
+  // Restore sheet when Android back button dismisses keyboard without triggering blur
+  useEffect(() => {
+    if (!isMobile) return
+    const viewport = window.visualViewport
+    if (!viewport) return
+    let prevHeight = viewport.height
+    function onResize() {
+      if (viewport!.height > prevHeight + 100) {
+        setSheetState(s => s === 'hidden' ? 'peek' : s)
+      }
+      prevHeight = viewport!.height
+    }
+    viewport.addEventListener('resize', onResize)
+    return () => viewport.removeEventListener('resize', onResize)
+  }, [isMobile])
+
   const goToPrevDay = useCallback(() => {
     flush()
     const d = new Date(currentDate + 'T12:00:00')
