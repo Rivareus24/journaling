@@ -29,7 +29,7 @@ export default function Home() {
   const [recentEntries, setRecentEntries] = useState<Entry[]>([])
   const [allEntries, setAllEntries] = useState<Entry[]>([])
   const [archiveOpen, setArchiveOpen] = useState(false)
-  const [sheetState, setSheetState] = useState<'peek' | 'half' | 'full'>('peek')
+  const [sheetState, setSheetState] = useState<'peek' | 'half' | 'full' | 'hidden'>('peek')
   const [searchOpen, setSearchOpen] = useState(false)
   const [prompt] = useState(getRandomPrompt)
 
@@ -100,7 +100,7 @@ export default function Home() {
         {/* Page card */}
         <div style={{
           position: 'absolute', top: 16, left: 16, right: 16,
-          bottom: 136,
+          bottom: 96,
           display: 'flex', flexDirection: 'column',
         }}>
           <DiaryPage
@@ -112,12 +112,14 @@ export default function Home() {
             isFuture={isFuture}
             prompt={prompt}
             variant="mobile"
+            onEditorFocus={() => setSheetState('hidden')}
+            onEditorBlur={() => setSheetState((s) => s === 'hidden' ? 'peek' : s)}
           />
         </div>
 
         {/* Mood bar above sheet */}
         <div style={{
-          position: 'absolute', left: 16, right: 16, bottom: 120,
+          position: 'absolute', left: 16, right: 16, bottom: 56,
           background: 'var(--paper-warm)',
           borderTop: '1px solid var(--rule)',
           padding: '10px 16px',

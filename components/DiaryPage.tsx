@@ -16,14 +16,19 @@ interface DiaryPageProps {
   isFuture: boolean
   prompt: string
   variant?: 'web' | 'mobile'
+  onEditorFocus?: () => void
+  onEditorBlur?: () => void
 }
 
 export default function DiaryPage({
   currentDate, draftBody, draftMood,
   onChange, onMoodChange, isFuture, prompt,
   variant = 'web',
+  onEditorFocus,
+  onEditorBlur,
 }: DiaryPageProps) {
   const editorRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
   const isUserEditing = useRef(false)
   const { dowLabel, day, monthLabel, year } = formatDateHeader(currentDate)
   const isMobile = variant === 'mobile'
@@ -36,6 +41,20 @@ export default function DiaryPage({
       el.textContent = draftBody
     }
   }, [currentDate, draftBody])
+
+  function scrollToCursor() {
+    const container = scrollRef.current
+    if (!container) return
+    const sel = window.getSelection()
+    if (!sel || sel.rangeCount === 0) return
+    const range = sel.getRangeAt(0).cloneRange()
+    range.collapse(false)
+    const rect = range.getBoundingClientRect()
+    const containerRect = container.getBoundingClientRect()
+    if (rect.bottom > containerRect.bottom - 8) {
+      container.scrollTop += rect.bottom - containerRect.bottom + 24
+    }
+  }
 
   const pageStyle: React.CSSProperties = isMobile
     ? {
@@ -115,11 +134,14 @@ export default function DiaryPage({
       </div>
 
       {/* Editor */}
-      <div style={{
-        flex: 1,
-        padding: isMobile ? '0 30px 30px' : '0 88px',
-        overflow: 'auto', position: 'relative',
-      }}>
+      <div
+        ref={scrollRef}
+        style={{
+          flex: 1,
+          padding: isMobile ? '0 30px 30px' : '0 88px',
+          overflow: 'auto', position: 'relative',
+        }}
+      >
         {isFuture ? (
           <p style={{
             fontFamily: 'var(--font-body)', fontStyle: 'italic',
@@ -133,10 +155,15 @@ export default function DiaryPage({
             ref={editorRef}
             contentEditable
             suppressContentEditableWarning
+            onFocus={onEditorFocus}
+            onBlur={onEditorBlur}
             onInput={(e) => {
               isUserEditing.current = true
               onChange((e.target as HTMLDivElement).textContent ?? '')
-              requestAnimationFrame(() => { isUserEditing.current = false })
+              requestAnimationFrame(() => {
+                isUserEditing.current = false
+                scrollToCursor()
+              })
             }}
             className={isMobile ? 'diary-editor-mobile' : 'diary-editor'}
             data-placeholder={prompt}
@@ -157,7 +184,7 @@ export default function DiaryPage({
             fontFamily: 'var(--font-title)', fontStyle: 'italic',
             fontSize: 16, color: 'var(--ink-faded)', fontWeight: 300,
           }}>
-            com'è andata oggi?
+            com&apos;è andata oggi?
           </div>
           <MoodPicker current={draftMood} onChange={onMoodChange} />
         </div>
