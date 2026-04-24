@@ -140,6 +140,7 @@ export default function DiaryPage({
           flex: 1,
           padding: isMobile ? '0 30px 30px' : '0 88px',
           overflow: 'auto', position: 'relative',
+          cursor: isMobile ? undefined : 'text',
         }}
         onClick={(e) => {
           if (e.target === e.currentTarget) {
