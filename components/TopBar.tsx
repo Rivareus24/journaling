@@ -23,11 +23,11 @@ export default function TopBar({
     }}>
       {/* Left: logo */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-          <span style={{ fontFamily: 'var(--font-title)', fontSize: 22, fontWeight: 500, letterSpacing: -0.3 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+          <span style={{ fontFamily: 'var(--font-hand)', fontSize: 26, fontWeight: 400, color: 'var(--ink-soft)', lineHeight: 1 }}>
             journaling
           </span>
-          <span style={{ fontFamily: 'var(--font-hand)', fontSize: 18, color: 'var(--accent)' }}>·</span>
+          <span style={{ fontFamily: 'var(--font-hand)', fontSize: 18, color: 'var(--accent)', lineHeight: 1 }}>·</span>
           <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 14, color: 'var(--ink-faded)' }}>
             The palest ink is better than the most excellent memory.
           </span>
