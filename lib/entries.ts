@@ -12,9 +12,12 @@ export async function getEntry(date: string): Promise<Entry | null> {
 }
 
 export async function upsertEntry(date: string, body: string, mood: Mood): Promise<void> {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Not authenticated')
+
   const { error } = await supabase.from('entries').upsert(
-    { date, body, mood, updated_at: new Date().toISOString() },
-    { onConflict: 'date' }
+    { date, body, mood, user_id: user.id, updated_at: new Date().toISOString() },
+    { onConflict: 'date,user_id' }
   )
   if (error) throw new Error(error.message)
 }
