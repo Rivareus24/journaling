@@ -15,3 +15,7 @@ create policy "user owns their entries"
   on entries for all
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+create index idx_entries_user_id on entries(user_id);
+
+alter table entries add constraint entries_body_length check (length(body) <= 50000);
