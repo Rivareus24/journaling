@@ -29,7 +29,7 @@ export default function TopBar({
           </span>
           <span style={{ fontFamily: 'var(--font-hand)', fontSize: 18, color: 'var(--accent)' }}>·</span>
           <span style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: 14, color: 'var(--ink-faded)' }}>
-            pensieri di tutti i giorni
+            The palest ink is better than the most excellent memory.
           </span>
         </div>
       </div>
