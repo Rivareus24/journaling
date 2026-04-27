@@ -143,6 +143,16 @@ export default function BottomSheet({ state, onStateChange, entries, onSelectEnt
               </button>
             )
           })}
+          <div style={{ padding: '20px 24px', textAlign: 'center', borderTop: '1px solid var(--rule)' }}>
+            <a
+              href="https://buymeacoffee.com/journaling24"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontStyle: 'italic', color: 'var(--ink-faded)', textDecoration: 'none' }}
+            >
+              ☕ offrimi un caffè
+            </a>
+          </div>
         </div>
       )}
     </motion.div>
